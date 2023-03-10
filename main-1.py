@@ -12,12 +12,13 @@ if __name__ == '__main__':   # Program entrance
     sensors = list()
     activities = list()
     try:
+        # Create run time objects of all relevant classes
         moistureSensor = MoistureSensor()
         potentiometerSensor = PotentiometerSensor()
         pumpActivity = PumpActivity()
         visualisation = Visualisation() 
                
-        #Activity is registered at the subject's activity list
+        # Activities are registered at the sonsors subscription list. Part of the observer pattern.
         moistureSensor.attach(pumpActivity)
         moistureSensor.attach(visualisation)
         potentiometerSensor.attach(pumpActivity)

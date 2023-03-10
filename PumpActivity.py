@@ -15,12 +15,10 @@ class PumpActivity (Activity):
     # !!! New pins must be added to getLedPinNumber() function!!!
     pumpControlPin = 16 # at position 21
     manualButtonPin = 22 # at position 29
-    debugPin = 1 # at position 2
     
     #Pin objects
     pumpControlObject = () 
     manualButtonObject = () 
-    debugPinObject = ()
     
     threshold = 24000  # Sensor value threshold for this activity. Values are provided by 5V capacitive soil moist sensor.
     sensorSpikeProtectionThreshold = 4 # Sometimes the sensors values will be invalid and might cause unintended watering. A defined number of threshold value exceedances prevents the system from doing so.
@@ -39,12 +37,6 @@ class PumpActivity (Activity):
     def update(self, sensor):
         if sensor.getName() == "MOISTURESENSOR":
             self.sensorData = sensor.value # The latest piece of data the sensor has measured.
-            #debug diod start
-            if self.debugPinObject.value():
-                self.debugPinObject.value(0)
-            else:
-                self.debugPinObject.value(1)
-            # debug diod end
             self.execute() # Start processing
         elif sensor.getName() == "POTENTIOMETER":
             self.threshold = sensor.threshold # The threshold value set by
@@ -53,7 +45,7 @@ class PumpActivity (Activity):
 
         
     def getLedPinNumber(self):
-        return (self.pumpControlPin, self.manualButtonPin, self.debugPin)
+        return (self.pumpControlPin, self.manualButtonPin)
     
     def start(self):
         #Instantiate Pin object for AUTOMATIC pump control
@@ -62,10 +54,6 @@ class PumpActivity (Activity):
         
         #Instantiate Pin object for MANUAL pump control
         self.manualButtonObject = machine.Pin(self.manualButtonPin, machine.Pin.IN, machine.Pin.PULL_UP)
-        
-        #Instantiate Pin object for debug diod
-        self.debugPinObject = machine.Pin(self.debugPin, machine.Pin.OUT)
-        self.debugPinObject.value(0)
         
     def execute(self):
         

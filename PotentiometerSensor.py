@@ -23,6 +23,8 @@ class PotentiometerSensor (Sensor):
     
     threshold = 0
     
+    lastValue = 0
+    
     NAME = "POTENTIOMETER"
     
  
@@ -38,5 +40,10 @@ class PotentiometerSensor (Sensor):
     def readValues (self):
         # Read value from potentiometer. 
         self.threshold = self.analogValuePonti.read_u16()
-        # Trigger the Observable notify method
-        self.notify()
+        temp = abs(self.threshold - self.lastValue)
+        #print("thresh: "+ str(self.threshold))
+        #print("temp " + str(temp))
+        if temp > 200:
+            # Trigger the Observable notify method
+            self.notify()
+        self.lastValue = self.threshold

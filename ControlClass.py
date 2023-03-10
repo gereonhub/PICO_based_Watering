@@ -17,8 +17,7 @@ class Controller:
         self.visualisation = visualisation
     
     """
-    Iterate over all activitites (there might be more than one) and make sure that every pin
-    is used only once.
+    Iterate over all activitites and make sure that every GPIO Pin is used only once.
     If this test passes - start all activities
     """
     def setupActivities(self):
@@ -29,22 +28,23 @@ class Controller:
             else:
                 print("ERROR --- LEDPIN already in use")
     
+    # Start second thread used for manual watering
+    # Todo: For this to work the only or first activity in the list of activities must be PumpActivity...
     def manualButtonListener(self):
         print("****************mBL()")
         self.activities[0].manualWatering()
     
+    # Iterate over all Sensor classes and start reading values.
     def operate(self):        
         while self.run: 
             for x in self.sensoren:
                 x.readValues()
-            utime.sleep(0.5)
+            #utime.sleep(0.5)
     
+    # Use this to stop activities 
     def destroy(self):
         for a in self.activities:
             a.stop()
-        #self.visualisation.destroy_LCD()
-        #GPIO.cleanup()
-
-
+        self.visualisation.destroy_LCD()
         
         
