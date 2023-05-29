@@ -1,28 +1,25 @@
+from Observer import Subject
+from SensorType import SensorType
 
-#Abstract class for observer
-
-class Sensor:
-
-    #observer list
-    activities = []
-    value = 0
-
-    def __init__(self):
+class Sensor (Subject): #todo sensor-Klasse abstrahieren
+ 
+    def __init__(self, sensorType):
+        try:
+            if sensorType in SensorType().getSensorTypes().values():
+                self.TYPE = sensorType
+            else:
+                raise Exception('Name provided for sensor(' +str(btnType)+ ') is not a valid sensorType name!')
+        except ValueError as ve:
+            print('ERROR: ' + repr(ve) + " - Program terminated.")
+            sys.exit()
+   
+    #Override
+    def initSensorCommunication (self):
         pass
-
-    #observer method
-    def notify (self):
-        for x in self.activities:
-            #print(x)
-            x.update(self)
     
-    #observer method
-    def attach (self, activity):
-        self.activities.append(activity)
+    #Override
+    def readValues (self):
+        pass
     
-    #observer method
-    def detach (self, activity):
-        self.activities.remove(actitity)
-        
-    def getName(self):
-        return self.NAME
+    def getSensorType (self):
+        return self.TYPE

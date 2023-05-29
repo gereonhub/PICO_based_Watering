@@ -1,0 +1,4 @@
+
+
+class ValueManager :
+    pass

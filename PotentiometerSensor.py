@@ -1,4 +1,4 @@
-from Sensor import Sensor
+from Observer import Observer
 from Activity import Activity
 from Visualisation import Visualisation
 import machine
@@ -17,7 +17,7 @@ Raspberry Pi PICO's ADC is used, using 16bit as resolution.
 
 '''
 
-class PotentiometerSensor (Sensor):
+class PotentiometerSensor (Observer):
  
     analogValuePonti = ()
     

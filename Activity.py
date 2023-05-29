@@ -1,5 +1,5 @@
 
-#Abstract class a
+#DEPRECATED. Both Observer and Subject are now handled in module "Observer"
 
 class Activity:
     

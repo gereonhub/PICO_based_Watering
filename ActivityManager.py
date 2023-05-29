@@ -1,0 +1,4 @@
+
+
+class ActivityManager (Activity) :
+    pass
