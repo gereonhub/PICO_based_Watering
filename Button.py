@@ -8,7 +8,7 @@ class Button (Subject):
     
     waitAfterPressed = False
    
-    VALID_GPIO_PINS = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,27,28]
+    VALID_GPIO_PINS = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,26,27,28] #todo should be in config file
     
     '''
     Instanciate the class by providing its name and the GPIO pin. PIN availability needs to be checked in caller class.
@@ -29,18 +29,20 @@ class Button (Subject):
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
             
+        super().__init__()
     '''
     Method defined to handle button event that is triggered when pressed (GPIO Event).
     Calls notify() which is defined in parent class Subject from Observer module
     '''
     def buttonHandler (self, pin):
-        print("notify" + self.getButtonType())
+        print(str(self.getButtonType())+" has been pressed and is notifying its subscribers")
         sleep_ms(100)
         self.notify()
     
     def setupButton(self):
         self.buttonObject = Pin(self.GPIO_PIN, Pin.IN, Pin.PULL_UP)
         self.buttonObject.value(0) # check ob nötig?
+        # Button interrupt
         self.buttonObject.irq(trigger=Pin.IRQ_FALLING, handler=self.buttonHandler)
         
     def getButtonState (self):

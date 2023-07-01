@@ -5,7 +5,7 @@ from Sensor import Sensor
 
 class AdcSensor (Sensor):
  
-    VALID_ADC_GPIO_PINS = [26,27,28]
+    VALID_ADC_GPIO_PINS = [26,27,28] #todo this should be part of config file
  
     value = -1
     

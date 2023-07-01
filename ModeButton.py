@@ -1,12 +1,11 @@
 from Button import Button
+from modeType import ModeType
 
 class ModeButton (Button):
     
-    VALID_MODES = ["SET_WATERING_TIME", "SET_THRESHOLD", "ACTIVATE_WATERING_MODE"]
-    
     def __init__ (self, btnType, pin, mode):
         try:
-            if mode in self.VALID_MODES:
+            if mode in ModeType().getModeTypes().values():
                 self.MODE = mode
             else:
                 raise Exception('Provided MODE (' +str(mode)+ ') does not exist!')

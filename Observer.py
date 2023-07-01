@@ -6,15 +6,14 @@ Observer: Object that waits for updates from the object it observes...
 '''
 class Subject:
 
-    #observer list
-    activities = [] #todo:rename this
     value = 0
 
     def __init__(self):
-        pass
+        self.activities = [] #todo:rename this
 
     #observer method
     def notify (self):
+        print("Observer:Subject: notify() self.activities:"+ str(len(self.activities)))
         for x in self.activities:
             #print(x)
             x.update(self)

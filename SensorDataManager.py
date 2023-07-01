@@ -5,8 +5,12 @@ from AdcSensor import AdcSensor
 
 class SensorDataManager (Observer):
     
+    def __init__(self, storedConfig):
+        self.configValues = storedConfig
+        super().__init__()
+    
     def setUpSensors(self):
-        self.moistureSensor = AdcSensor(26, SensorType().getSensorTypes()["moisture"])
+        self.moistureSensor = AdcSensor(self.configValues["PIN_ADC_MOISTURE_SENSOR"], SensorType().getSensorTypes()["moisture"])
         self.moistureSensor.attach(self)
     
     def update(self, sensor):

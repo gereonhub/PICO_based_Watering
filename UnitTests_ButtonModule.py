@@ -58,7 +58,7 @@ if __name__ == '__main__':   # Program entrance
     print(ButtonType().getButtonTypes())
     
     bev = ButtonEventManager()
-    bev.setUpButtons()
+    bev.setupButtons()
     runDownButtonTest (bev.downButton)
     runUpButtonTest (bev.upButton)
     runModeButtonTest (bev.modeButton)

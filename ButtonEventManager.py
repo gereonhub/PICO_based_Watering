@@ -15,17 +15,23 @@ from ModeButton import ModeButton
 class ButtonEventManager(Observer, Subject):
     
     def __init__(self):
-        pass
+        Observer.__init__(self)
+        Subject.__init__(self)
+        
     
-    def setUpButtons(self):
+    def setupButtons(self): #todo how to store these values in a config file
         self.downButton = DownButton (ButtonType().getButtonTypes()["down"], 2, 50)
         self.downButton.attach(self)
+        self.downButton.setupButton()
         self.upButton = UpButton (ButtonType().getButtonTypes()["up"], 3, 50)
         self.upButton.attach(self)
+        self.upButton.setupButton()
         self.modeButton = ModeButton (ButtonType().getButtonTypes()["setMode"], 4, "ACTIVATE_WATERING_MODE")
         self.modeButton.attach(self)
+        self.modeButton.setupButton()
         self.wateringButton = WateringButton (ButtonType().getButtonTypes()["watering"], 5)
         self.wateringButton.attach(self)
+        self.wateringButton.setupButton()
     
     def update (self, button):
         print("BUTTON UPDATE TRIGGERED")
@@ -37,6 +43,7 @@ class ButtonEventManager(Observer, Subject):
             print ("Modus")#todo Implement action
         elif button.getButtonType() == ButtonType().getButtonTypes()["watering"]:
             print ("Wässern")#todo Implement action
+            self.notify()
         else:
             print ("NONE")#todo Implement action
     
