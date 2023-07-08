@@ -9,12 +9,8 @@ class PumpActivity ():
     pumpControlObject = ()
     
     def __init__(self, pin):
-        self.pumpControlPin = 16 # at position 21 
-
-    # Observer method
-    def update(self):
-        pass
-    
+        self.pumpControlPin = pin # usually PIN 16 at position 21
+        
     def initializePinObject(self):
         #Instantiate Pin object for AUTOMATIC pump control
         self.pumpControlObject = machine.Pin(self.pumpControlPin, machine.Pin.OUT)

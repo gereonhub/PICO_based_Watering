@@ -2,6 +2,8 @@ from Button import Button
 
 class DownButton (Button):
     
+    #todo decrease / increase need to be stored in value-file. De-or incrase setting needs to be set numerically -/+.
+    #getter method should be part of parent class and should be generic
     def __init__ (self, btnType, pin, decrease_by):
         try:
             if decrease_by > 0 and decrease_by < 1000:

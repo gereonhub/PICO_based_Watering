@@ -35,7 +35,7 @@ class Button (Subject):
     Calls notify() which is defined in parent class Subject from Observer module
     '''
     def buttonHandler (self, pin):
-        print(str(self.getButtonType())+" has been pressed and is notifying its subscribers")
+        print("Button class:" + str(self.getButtonType())+" has been pressed and is notifying its subscribers")
         sleep_ms(100)
         self.notify()
     

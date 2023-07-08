@@ -15,7 +15,7 @@ class ActivityManager (Observer, Subject) :
     moseSpikeProtectionCounter = 0 
     
     '''
-    values is the reference to the valueManager object #todo should be a singleton
+    ConfigValues is the reference to the valueManager object #todo should be a singleton
     '''    
     def __init__(self, valuesOfvalueManager):
         self.configValues = valuesOfvalueManager
@@ -31,10 +31,44 @@ class ActivityManager (Observer, Subject) :
         #todo Communication
     
     def update (self, data):
-        self.automaticPumpControl() #todo DEBUGGING VALUE
+        if data.getEvent() == "DECREASE_EVENT":     
+            print ("Runter")
+            #todo Implement action
+            
+        elif data.getEvent() == "INCREASE_EVENT":
+            print ("Hoch")
+            #todo Implement action
+        elif data.getEvent() == "MODE_CHANGE_EVENT":
+            print ("Modus")
+            #todo Implement action
+        elif data.getEvent() == "WATERING_EVENT":
+            print ("Watering")
+            self.manualPumpControl()
+        elif data.getEvent() == "MOISTURE_SENSOR_VALUE_EVENT":
+            print ("SensorUpdate")
+            self.automaticPumpControl()
+        else:
+            print ("NONE")#todo Implement action
+        
+        
+    #-----------------------------------------------------------------------------------
+    #-------------------------------Set Mode methods-----------------------------------
+    def adjustModePrameters (self):
+        #1. check what is current mode -> configValues MODE
+        #2. check Parameter min max (#todo)
+        #3. adjust parameter in configValues
+        print("Current Mode: "+self.configValues["MODE"])
+        pass
+        
+    def setMode (self):
+        #1. check what is current mode -> configValues MODE
+        #2. toggle to next mode
+        #3. setMode in configValues MODE
+        print("Current Mode: "+self.configValues["MODE"])
+        pass
     
     
-    
+    #-----------------------------------------------------------------------------------
     #-------------------------------Pump Control methods--------------------------------
     
     def manualPumpControl(self):

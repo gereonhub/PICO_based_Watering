@@ -1,9 +1,10 @@
 import machine
 
 from Sensor import Sensor
+from Observer import Subject
 
 
-class AdcSensor (Sensor):
+class AdcSensor (Sensor, Subject):
  
     VALID_ADC_GPIO_PINS = [26,27,28] #todo this should be part of config file
  
@@ -28,7 +29,8 @@ class AdcSensor (Sensor):
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
-        super().__init__(sensorType)
+        Sensor.__init__(self, sensorType)
+        Subject.__init__(self)
             
     #todo check if exception handling is ok here
     def initSensorCommunication (self):

@@ -1,0 +1,37 @@
+{
+    "WATERING_TIME":
+        {
+            "MIN":3,
+            "MAX": 12
+        },
+    "THRESH_DOWN_EVENT":
+        {
+            "MIN": 10,
+            "MAX": 500
+        },         
+    "THRESH_UP_EVENT":
+        {
+            "MIN": 10,
+            "MAX": 500
+        },   
+    "MOISTURE_SENSOR_INITIAL_IGNORE":
+        {
+            "MIN": 10,
+            "MAX": 50
+        }, 
+    "WATERING_WAIT_TIME":
+        {
+            "MIN": 10,
+            "MAX": 500
+        }, 
+    "WATERING_THRESHOLD":
+        {
+            "MIN": 10,
+            "MAX": 60000
+        }, 
+    "MOISTURE_SENSOR_SPIKE_PROTECTION":
+        {
+            "MIN": 0,
+            "MAX": 20
+        }, 
+}

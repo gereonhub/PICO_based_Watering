@@ -1,11 +1,10 @@
-from valueManager import ValueManager
 from pumpActivity import PumpActivity
 from activityManager import ActivityManager
+from ioManager import IOManager
 
 def runActivityManagerTest ():
-    values = ValueManager()
-    print(values.PIN_MODE_BUTTON)
-    am = ActivityManager (values)
+    ioManager = IOManager()
+    am = ActivityManager (ioManager.getConfigValues())
     print ("am is initiated")
     am.setupActivities()
     print("activites updates")

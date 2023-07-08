@@ -13,19 +13,20 @@ class ControlModule:
         # Open filestream and deserialize configValue file (JSON)
         self.ioManager = IOManager()
         # Instanciate central file manager using config values to create central value object
-        self.valueManager = ValueManager(self.ioManager.getConfigObject())
+        self.valueManager = ValueManager(self.ioManager.getConfigValues(), self.ioManager.getMinMaxValues(), self.ioManager.getTypesAndModes())
         #Instanciate SensorManager providing central value object.
-        ###self.sensorDM = SensorDataManager(self.valueManager.values)
+        self.sensorDM = SensorDataManager(self.valueManager.values)
         #Instanciate ButtonEventManager
-        self.buttonEM = ButtonEventManager()
+        self.buttonEM = ButtonEventManager(self.ioManager.getConfigValues())
         self.buttonEM.setupButtons()       
         #Instanciate Activity Manager providing central value object
-        self.activityManager = ActivityManager(self.valueManager.values)
+        self.activityManager = ActivityManager(self.ioManager.getConfigValues())
         self.activityManager.setupActivities()
         
 
     
     def establishManagerConnections(self):
-        self.buttonEM.attach(self.activityManager)    
+        self.buttonEM.attach(self.activityManager)
+        self.sensorDM.attach(self.activityManager)
     
     

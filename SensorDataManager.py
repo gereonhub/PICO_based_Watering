@@ -1,19 +1,31 @@
-from Observer import Observer
+from Observer import Observer, Subject
 
-from SensorType import SensorType
 from AdcSensor import AdcSensor
 
-class SensorDataManager (Observer):
-    
-    def __init__(self, storedConfig):
-        self.configValues = storedConfig
-        super().__init__()
+class SensorDataManager (Observer, Subject):
+
+    event = "" #IMPORTANT for every Manager class
+
+    def __init__(self, values):
+        self.configValues = values
+        Observer.__init__(self)
+        Subject.__init__(self)
     
     def setUpSensors(self):
-        self.moistureSensor = AdcSensor(self.configValues["PIN_ADC_MOISTURE_SENSOR"], SensorType().getSensorTypes()["moisture"])
+        #todo type and PIN need to be checked here to make sure config values are valid
+        self.moistureSensor = AdcSensor(self.configValues["PIN_ADC_MOISTURE_SENSOR"], "MOISTURE_SENSOR")
         self.moistureSensor.attach(self)
     
     def update(self, sensor):
         print ("*** SensorUpdate triggered")
-        if sensor.getSensorType() == SensorType().getSensorTypes()["moisture"]:
-            print ("MoistureSensor has sent an update")
+        if sensor.getSensorType() == "MOISTURE_SENSOR":
+            print (sensor.getSensorType() + " has sent an update")
+            self.event = self.determineEventType(sensor)
+            self.notify()
+            
+    def determineEventType(self, sensor):
+        if sensor.getSensorType() == "":
+            self.event = "MOISTURE_SENSOR_VALUE_EVENT"         
+            
+    def getEvent (self):
+        return self.event
