@@ -4,16 +4,11 @@
             "MIN":3,
             "MAX": 12
         },
-    "THRESH_DOWN_EVENT":
+    "WATERING_THRESHOLD_UP_DOWN_VALUE":
         {
             "MIN": 10,
             "MAX": 500
-        },         
-    "THRESH_UP_EVENT":
-        {
-            "MIN": 10,
-            "MAX": 500
-        },   
+        },          
     "MOISTURE_SENSOR_INITIAL_IGNORE":
         {
             "MIN": 10,
@@ -26,7 +21,7 @@
         }, 
     "WATERING_THRESHOLD":
         {
-            "MIN": 10,
+            "MIN": 100,
             "MAX": 60000
         }, 
     "MOISTURE_SENSOR_SPIKE_PROTECTION":

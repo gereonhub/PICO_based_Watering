@@ -1,10 +1,6 @@
 from Observer import Subject
 from Observer import Observer
-from buttonType import ButtonType
 from Button import Button
-from UpButton import UpButton
-from WateringButton import WateringButton
-from ModeButton import ModeButton
 
 '''
 General 
@@ -57,22 +53,26 @@ class ButtonEventManager(Observer, Subject):
     Buttons trigger notify() whenever pressed physically. 
     '''
     def update (self, button):
-        print("BUTTON UPDATE TRIGGERED by " + button.getButtonType())        
-        self.event = self.determineEventType()       
+        print("BEM - update() : BUTTON UPDATE TRIGGERED by " + button.getButtonType())        
+        self.event = self.determineEventType(button)
         self.notify()
         
     def getEvent (self):
         return self.event
     
     def determineEventType(self, button):
-            if button.getButtonType() == "DOWN_BUTTON":
-                self.event = "DECREASE_EVENT"           
-            elif type == "UP_BUTTON":
-                self.event = "INCREATE_EVENT"             
-            elif type == "SETMODE_BUTTON":
-                self.event = "MODE_CHANGE_EVENT"                
-            elif type == "WATERING_BUTTON":
-                self.event = "WATERING_EVENT"
+        eventType = ""
+        if button.getButtonType() == "DOWN_BUTTON":
+            eventType = "DECREASE_EVENT"
+        elif button.getButtonType() == "UP_BUTTON":
+            eventType = "INCREASE_EVENT"             
+        elif button.getButtonType() == "SETMODE_BUTTON":
+            eventType = "MODE_CHANGE_EVENT"                
+        elif button.getButtonType() == "WATERING_BUTTON":
+            eventType = "WATERING_EVENT"
+        else:
+            eventType == "ERROR_NO_EVENT_FOUND"
+        return eventType
         
         
         

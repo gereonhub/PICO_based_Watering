@@ -1,7 +1,6 @@
 from machine import Pin
 from Observer import Subject
 from time import sleep_ms
-from buttonType import ButtonType
 import sys
 
 class Button (Subject):
@@ -21,10 +20,10 @@ class Button (Subject):
                 self.GPIO_PIN = pin
             else:
                 raise Exception('GPIO pin provided (' +str(pin)+ ') is invalid!')
-            if btnType in ButtonType().getButtonTypes().values():
-                self.TYPE = btnType
-            else:
-                raise Exception('Name provided (' +str(btnType)+ ') is not a valid ButtonType name!')
+#             if btnType in ButtonType().getButtonTypes().values():
+            self.TYPE = btnType
+#             else:
+#                 raise Exception('Name provided (' +str(btnType)+ ') is not a valid ButtonType name!')
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()

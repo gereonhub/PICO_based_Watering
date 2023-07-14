@@ -15,12 +15,13 @@ class ControlModule:
         # Instanciate central file manager using config values to create central value object
         self.valueManager = ValueManager(self.ioManager.getConfigValues(), self.ioManager.getMinMaxValues(), self.ioManager.getTypesAndModes())
         #Instanciate SensorManager providing central value object.
-        self.sensorDM = SensorDataManager(self.valueManager.values)
+        self.sensorDM = SensorDataManager(self.ioManager.getConfigValues())
+        self.sensorDM.setUpSensors()
         #Instanciate ButtonEventManager
         self.buttonEM = ButtonEventManager(self.ioManager.getConfigValues())
         self.buttonEM.setupButtons()       
         #Instanciate Activity Manager providing central value object
-        self.activityManager = ActivityManager(self.ioManager.getConfigValues())
+        self.activityManager = ActivityManager(self.valueManager)
         self.activityManager.setupActivities()
         
 
