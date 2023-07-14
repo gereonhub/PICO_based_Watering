@@ -40,7 +40,6 @@ class AdcSensor (Sensor, Subject):
             print (repr(E) + "ADC could not be initialized") #todo create proper exception handling
        
     def readValues (self):
-        
         # Read value from sensor
         temp =  self.analogValue.read_u16()
         

@@ -19,13 +19,13 @@ class SensorDataManager (Observer, Subject):
     def update(self, sensor):
         print ("SM - update(): *** SensorUpdate triggered")
         if sensor.getSensorType() == "MOISTURE_SENSOR":
-            print ("SM - update(): " +sensor.getSensorType() + " has sent an update")
+            print ("SM - update(): " + sensor.getSensorType() + " has sent an update")
             self.event = self.determineEventType(sensor)
             self.notify()
-            
+
     def determineEventType(self, sensor):
         if sensor.getSensorType() == "MOISTURE_SENSOR":
             return "MOISTURE_SENSOR_VALUE_EVENT"         
-            
+
     def getEvent (self):
         return self.event

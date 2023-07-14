@@ -23,11 +23,8 @@ class ControlModule:
         #Instanciate Activity Manager providing central value object
         self.activityManager = ActivityManager(self.valueManager)
         self.activityManager.setupActivities()
-        
 
     
     def establishManagerConnections(self):
         self.buttonEM.attach(self.activityManager)
         self.sensorDM.attach(self.activityManager)
-    
-    
