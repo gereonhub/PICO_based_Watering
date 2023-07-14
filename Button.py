@@ -1,7 +1,6 @@
 from machine import Pin
 from Observer import Subject
 from time import sleep_ms
-from buttonType import ButtonType
 import sys
 
 class Button (Subject):

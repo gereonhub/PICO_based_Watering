@@ -1,12 +1,11 @@
 {
-    "MODE":
+    "MODES":
         [ 
-            "SET_WATERING_TIME",
-            "SET_THRESHOLD",
-            "SET_INITIAL_IGNORE",
-            "SET_WATERING_WAIT_TIME",
-            "ACTIVATE_WATERING_MODE", 
-            "DEFAULT"
+            "WATERING_TIME",
+            "MOISTURE_SENSOR_INITIAL_IGNORE",
+            "WATERING_WAIT_TIME",
+            "WATERING_THRESHOLD",
+            "MOISTURE_SENSOR_SPIKE_PROTECTION"
         ],
     "BUTTON_TYPE":
         [
