@@ -11,6 +11,7 @@ class Sensor (Subject): #todo sensor-Klasse abstrahieren
     
     #Override
     def readValues (self):
+        #todo implmenent
         pass
     
     def getSensorType (self):
