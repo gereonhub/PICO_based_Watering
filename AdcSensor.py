@@ -22,10 +22,9 @@ class AdcSensor (Sensor, Subject):
  
     def __init__(self, pin, sensorType): #todo Name might be useful, too. Two sensors of one type are theoretically possible.
         try:
-            if pin in self.VALID_ADC_GPIO_PINS:
-                self.ADC_GPIO_PIN = pin
-            else:
+            if pin not in self.VALID_ADC_GPIO_PINS:
                 raise Exception('GPIO pin provided for sensor (' +str(pin)+ ') is invalid!')
+            self.ADC_GPIO_PIN = pin
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()

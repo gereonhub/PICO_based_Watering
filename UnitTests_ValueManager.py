@@ -8,9 +8,9 @@ if __name__ == '__main__':
     #valueManager.values["DEBUG"] = "VeraenderterWert"
     #print(valueManager.values["DEBUG"])
     print(valueManager.values["MOISTURE_SENSOR_SPIKE_PROTECTION"])
-    valueManager.setValue("MOISTURE_SENSOR_SPIKE_PROTECTION",15)
+    valueManager.setValue("MOISTURE_SENSOR_SPIKE_PROTECTION", 15)
     print(valueManager.values["MOISTURE_SENSOR_SPIKE_PROTECTION"])
-    valueManager.setValue("MOISTURE_SENSOR_SPIKE_PROTECTION",21)
+    valueManager.setValue("MOISTURE_SENSOR_SPIKE_PROTECTION", 21)
     print(valueManager.values["MOISTURE_SENSOR_SPIKE_PROTECTION"])
     iom.writeConfiguration(valueManager.values)
      

@@ -36,7 +36,6 @@ class ButtonEventManager(Observer, Subject):
     def setupButtons(self): #todo how to store these values in a config file
         
         for type, values in self.configValues["BUTTONS"].items(): 
-           
             if type == "DOWN_BUTTON":
                 downButton = Button (type, values["PIN"])
                 self.buttonList.append(downButton)             
@@ -68,7 +67,7 @@ class ButtonEventManager(Observer, Subject):
             if button.getButtonType() == "DOWN_BUTTON":
                 self.event = "DECREASE_EVENT"           
             elif type == "UP_BUTTON":
-                self.event = "INCREATE_EVENT"             
+                self.event = "INCREASE_EVENT"             
             elif type == "SETMODE_BUTTON":
                 self.event = "MODE_CHANGE_EVENT"                
             elif type == "WATERING_BUTTON":

@@ -15,27 +15,24 @@ class Button (Subject):
     name has to be a membe of Buttontype dictionary #todo find alternative for proper enum class here.
     '''
     def __init__(self, btnType, pin):
-                
         try:
-            if pin in self.VALID_GPIO_PINS:
-                self.GPIO_PIN = pin
-            else:
+            if pin not in self.VALID_GPIO_PINS:
                 raise Exception('GPIO pin provided (' +str(pin)+ ') is invalid!')
-            if btnType in ButtonType().getButtonTypes().values():
-                self.TYPE = btnType
-            else:
+            self.GPIO_PIN = pin
+
+            if btnType not in ButtonType().getButtonTypes().values():
                 raise Exception('Name provided (' +str(btnType)+ ') is not a valid ButtonType name!')
+            self.TYPE = btnType
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
-            
         super().__init__()
     '''
     Method defined to handle button event that is triggered when pressed (GPIO Event).
     Calls notify() which is defined in parent class Subject from Observer module
     '''
     def buttonHandler (self, pin):
-        print("Button class:" + str(self.getButtonType())+" has been pressed and is notifying its subscribers")
+        print("Button class:" + str(self.getButtonType()) + " has been pressed and is notifying its subscribers")
         sleep_ms(100)
         self.notify()
     

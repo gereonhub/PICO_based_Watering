@@ -23,7 +23,7 @@ class ActivityManager (Observer, Subject) :
         Subject.__init__(self)
     
     def setupActivities(self):
-        #Pump
+        # Pump
         self.pumpActivityObject = PumpActivity(self.configValues["PIN_PUMP_ACTIVITY"])
         self.pumpActivityObject.initializePinObject()
         #todo LCD
@@ -34,7 +34,6 @@ class ActivityManager (Observer, Subject) :
         if data.getEvent() == "DECREASE_EVENT":     
             print ("Runter")
             #todo Implement action
-            
         elif data.getEvent() == "INCREASE_EVENT":
             print ("Hoch")
             #todo Implement action
@@ -81,7 +80,7 @@ class ActivityManager (Observer, Subject) :
     
     def automaticPumpControl (self):
         '''
-        If wait state is still acitve (true if pump has been active recently)
+        If wait state is still active (true if pump has been active recently)
         no automatic watering is possible. pumpActivityObject.getWaitState will
         be set to false as soon as defined waiting time period has been exceeded.
         '''
