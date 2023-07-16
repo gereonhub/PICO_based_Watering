@@ -1,5 +1,5 @@
 from machine import Pin
-from Observer import Subject
+from observer import Subject
 from time import sleep_ms
 import sys
 

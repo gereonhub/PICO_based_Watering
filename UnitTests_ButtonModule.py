@@ -1,11 +1,11 @@
-from Button import Button
+from button import Button
 from DownButton import DownButton
 from UpButton import UpButton
 from WateringButton import WateringButton
 from ModeButton import ModeButton
-from ButtonEventManager import ButtonEventManager
+from button_event_manager import ButtonEventManager
 from buttonType import ButtonType
-from ioManager import IOManager
+from io_manager import IOManager
 
 def runButtonTest(testButton):
     print(testButton.getButtonType())

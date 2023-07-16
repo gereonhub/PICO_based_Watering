@@ -1,5 +1,5 @@
-from SensorDataManager import SensorDataManager
-from ioManager import IOManager
+from sensor_data_manager import SensorDataManager
+from io_manager import IOManager
 
 def runMoistureSensorTest(testSensor):
     print(testSensor.getSensorType())

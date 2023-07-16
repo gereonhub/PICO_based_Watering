@@ -1,5 +1,5 @@
 from valueManager import ValueManager
-from ioManager import IOManager
+from io_manager import IOManager
 
 if __name__ == '__main__':
     iom = IOManager()
