@@ -1,6 +1,6 @@
-from Observer import Subject
-from Observer import Observer
-from Button import Button
+from observer import Subject
+from observer import Observer
+from button import Button
 
 '''
 General 
@@ -32,7 +32,6 @@ class ButtonEventManager(Observer, Subject):
     def setupButtons(self): #todo how to store these values in a config file
         
         for type, values in self.configValues["BUTTONS"].items(): 
-           
             if type == "DOWN_BUTTON":
                 downButton = Button (type, values["PIN"])
                 self.buttonList.append(downButton)             
@@ -73,6 +72,3 @@ class ButtonEventManager(Observer, Subject):
         else:
             eventType == "ERROR_NO_EVENT_FOUND"
         return eventType
-        
-        
-        

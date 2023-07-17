@@ -1,6 +1,6 @@
 import utime
 
-from Observer import Observer, Subject
+from observer import Observer, Subject
 from pumpActivity import PumpActivity
 
 '''
@@ -14,6 +14,7 @@ class ActivityManager (Observer, Subject) :
     moseData = 5 # todo 5 only for debug reason. should be 0
     moseSpikeProtectionCounter = 0 
     
+
     '''
     ConfigValues is the reference to the valueManager object #todo should be a singleton
     '''    
@@ -22,41 +23,38 @@ class ActivityManager (Observer, Subject) :
         self.valueManager = valueManagerObject
         Observer.__init__(self)
         Subject.__init__(self)
-    
+
+
     def setupActivities(self):
-        #Pump
+        # Pump
         self.pumpActivityObject = PumpActivity(self.configValues["PIN_PUMP_ACTIVITY"])
         self.pumpActivityObject.initializePinObject()
         #todo LCD
         
         #todo Communication
-    
-    def update (self, data):
 
+
+    def update (self, data):
         if data.getEvent() == "DECREASE_EVENT":     
             print ("AM - update(): DECREASE_EVENT")
             self.adjustModeParameters("DOWN")
-            
         elif data.getEvent() == "INCREASE_EVENT":
             print ("AM - update(): INCREASE_EVENT")
             self.adjustModeParameters("UP")
-            
         elif data.getEvent() == "MODE_CHANGE_EVENT":
             print ("AM - update(): MODE_CHANGE_EVENT")
             self.setMode()
-            
         elif data.getEvent() == "WATERING_EVENT":
             print ("AM - update(): WATERING_EVENT")
             self.manualPumpControl()
-            
         elif data.getEvent() == "MOISTURE_SENSOR_VALUE_EVENT":
             print ("AM - update(): MOISTURE_SENSOR_VALUE_EVENT")
             #todo how to get the actual SensorData through? 
             self.automaticPumpControl()
         else:
             print ("NONE")#todo Implement action
-        
-        
+
+
     #-----------------------------------------------------------------------------------
     #-------------------------------Set Mode methods-----------------------------------
     def adjustModeParameters (self, upDownFlag):
@@ -109,11 +107,10 @@ class ActivityManager (Observer, Subject) :
         '''
         if self.pumpActivityObject.getWaitState():
             waitStateTimeDifference = utime.time() - self.lastWateringActivity            
-            if waitStateTimeDifference > self.configValues["WATERING_WAIT_TIME"]:
-                self.wait = False
-            else:
+            if waitStateTimeDifference <= self.configValues["WATERING_WAIT_TIME"]:
                 print('DEBUG - "Wait" is still active') #todo delete - debugging
                 return False
+            self.wait = False
         print ('AM - automaticPumpControl: not waiting') #todo delete - debugging 
         
         '''
@@ -123,18 +120,18 @@ class ActivityManager (Observer, Subject) :
         '''
         print("AM - automaticPumpControl(): Sensor data versus threshold: "+str(self.moseData) +".>."+str(self.configValues["WATERING_THRESHOLD"])) #todo delete debugging
         if self.moseData > self.configValues["WATERING_THRESHOLD"]:
-            print(str(self.moseSpikeProtectionCounter) +".<."+str(self.configValues["MOISTURE_SENSOR_SPIKE_PROTECTION"])) #todo delete debugging
+            print(str(self.moseSpikeProtectionCounter) + ".<." + str(self.configValues["MOISTURE_SENSOR_SPIKE_PROTECTION"])) #todo delete debugging
             if self.moseSpikeProtectionCounter < self.configValues["MOISTURE_SENSOR_SPIKE_PROTECTION"]:
                 self.moseSpikeProtectionCounter+=1
                 return False
-            else: 
-                print('DEBUG - Threshold exceeded. Start watering...')#todo delete - debugging
-                self.pumpActivityObject.activatePump()
-                utime.sleep(self.configValues["WATERING_TIME"])
-                self.pumpActivityObject.stopPump()           
-                self.pumpActivityObject.setWaitState(True)
-                self.lastWateringActivity = utime.time()
-                self.moseSpikeProtectionCounter = 0
+            # else überflüssig - Du hast ein return drin, im if-Fall
+            print('DEBUG - Threshold exceeded. Start watering...')#todo delete - debugging
+            self.pumpActivityObject.activatePump()
+            utime.sleep(self.configValues["WATERING_TIME"])
+            self.pumpActivityObject.stopPump()           
+            self.pumpActivityObject.setWaitState(True)
+            self.lastWateringActivity = utime.time()
+            self.moseSpikeProtectionCounter = 0
         else:
             if self.moseSpikeProtectionCounter > 0:
                 self.moseSpikeProtectionCounter-=1

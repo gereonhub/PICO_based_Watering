@@ -1,6 +1,6 @@
 from pumpActivity import PumpActivity
 from activityManager import ActivityManager
-from ioManager import IOManager
+from io_manager import IOManager
 
 def runActivityManagerTest ():
     ioManager = IOManager()

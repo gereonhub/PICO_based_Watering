@@ -1,8 +1,8 @@
 from valueManager import ValueManager
 from activityManager import ActivityManager
-from ButtonEventManager import ButtonEventManager
-from ioManager import IOManager
-from SensorDataManager import SensorDataManager
+from button_event_manager import ButtonEventManager
+from io_manager import IOManager
+from sensor_data_manager import SensorDataManager
 
 class ControlModule:
     
@@ -23,11 +23,8 @@ class ControlModule:
         #Instanciate Activity Manager providing central value object
         self.activityManager = ActivityManager(self.valueManager)
         self.activityManager.setupActivities()
-        
 
     
     def establishManagerConnections(self):
         self.buttonEM.attach(self.activityManager)
         self.sensorDM.attach(self.activityManager)
-    
-    

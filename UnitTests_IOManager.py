@@ -1,4 +1,4 @@
-from ioManager import IOManager
+from io_manager import IOManager
 
 if __name__ == '__main__':   # Program entrance
     iom = IOManager()

@@ -2,7 +2,7 @@ import machine
 import _thread
 
 class PumpActivity ():
-    
+
     waitState = False
     
     #Pin objects
