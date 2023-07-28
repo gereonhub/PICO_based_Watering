@@ -1,4 +1,4 @@
-from observer import Observer, Subject
+from Observer import Observer, Subject
 
 from adc_sensor import AdcSensor
 

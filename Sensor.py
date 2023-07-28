@@ -1,4 +1,4 @@
-from observer import Subject
+from Observer import Subject
 
 class Sensor (Subject): #todo sensor-Klasse abstrahieren
  

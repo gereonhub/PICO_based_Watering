@@ -1,7 +1,7 @@
 import machine
 
-from sensor import Sensor
-from observer import Subject
+from Sensor import Sensor
+from Observer import Subject
 
 
 class AdcSensor (Sensor, Subject):
@@ -10,8 +10,8 @@ class AdcSensor (Sensor, Subject):
  
     value = -1
     
-    # First sensor values need to be ignored due to latency of the sensor
     '''
+    First sensor values need to be ignored due to latency of the sensor
     Needs to be adjustable by button with a respective mode.
     #todo re-init of button or value manipulation should then be possible by buttonManager
     '''

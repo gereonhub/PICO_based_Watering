@@ -1,4 +1,3 @@
-from Activity import Activity
 from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
@@ -9,34 +8,31 @@ Currently only used to write sensor data in a file.
 
 Implements Activity -> Is an Observer.A
 '''
-class Visualisation (Activity):
+class LCD1602Visualisation ():
     
     datapoints = []
     data = "-boot-"
     i2c = ()
     lcd = ()
+    
+    # Configuration values for 1620 LCD
+    i2c_address = 0x27
+    lcd_num_lines = 2
+    lcd_num_columns = 16
+
     threshold = 0
     
-    def __init__ (self):
-        # Initialisierung I2C
-        self.i2c= I2C(0, sda=Pin(20), scl=Pin(21), freq=100000)
-        # Initialisierung LCD über I2C
-        self.lcd = I2cLcd(self.i2c, 0x27, 2, 16)
-        #self.lcd.clear()        
-        #self.lcd.putstr("Initializing...")
+    def __init__ (self,sdaPin, sclPin, frequency):
+        
+        #DEBUG
+        pass
+        #DEBUG
+        
+        # Initialization I2C at given I2C port
+        ### self.i2c= I2C(0, sda=Pin(sdaPin), scl=Pin(sclPin), freq=frequency)
+        # Initialization LCD via I2C
+        ### self.lcd = I2cLcd(self.i2c, i2c_address, lcd_num_lines, lcd_num_columns)
     
-    def update(self, sensor):
-        if sensor.getName() == "MOISTURESENSOR":
-            self.data = sensor.value # The latest piece of data the sensor has measured.
-            #print("Moisty")
-            self.update_LCD()
-        elif sensor.getName() == "POTENTIOMETER":
-            self.threshold = sensor.threshold # The threshold value set by
-            #print("Ponti")
-            self.update_LCD()
-        else:
-            print ("ERROR - no value has been transmitted") 
-
     def update_LCD(self):
         # Display-Zeilen ausgeben
         self.lcd.clear()        

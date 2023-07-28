@@ -1,5 +1,5 @@
-from valueManager import ValueManager
-from activityManager import ActivityManager
+from value_manager import ValueManager
+from activity_manager import ActivityManager
 from button_event_manager import ButtonEventManager
 from io_manager import IOManager
 from sensor_data_manager import SensorDataManager

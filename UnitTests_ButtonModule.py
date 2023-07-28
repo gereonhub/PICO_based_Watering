@@ -1,10 +1,5 @@
-from button import Button
-from DownButton import DownButton
-from UpButton import UpButton
-from WateringButton import WateringButton
-from ModeButton import ModeButton
+from Button import Button
 from button_event_manager import ButtonEventManager
-from buttonType import ButtonType
 from io_manager import IOManager
 
 def runButtonTest(testButton):

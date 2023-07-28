@@ -1,4 +1,4 @@
-from valueManager import ValueManager
+from value_manager import ValueManager
 from io_manager import IOManager
 
 if __name__ == '__main__':

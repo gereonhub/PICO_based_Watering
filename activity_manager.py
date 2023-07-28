@@ -1,7 +1,8 @@
 import utime
 
-from observer import Observer, Subject
-from pumpActivity import PumpActivity
+from Observer import Observer, Subject
+from pump_activity import PumpActivity
+from Visualisation import LCD1602Visualisation
 
 '''
 Responsible to instanciate and control the Activities
@@ -29,28 +30,33 @@ class ActivityManager (Observer, Subject) :
         # Pump
         self.pumpActivityObject = PumpActivity(self.configValues["PIN_PUMP_ACTIVITY"])
         self.pumpActivityObject.initializePinObject()
-        #todo LCD
-        
-        #todo Communication
+        # LCD 1602
+        self.lcd1602visualisation = LCD1602Visualisation(self.configValues["PIN_LCD_I2C_SDA"],self.configValues["PIN_LCD_I2C_SCL"], self.configValues["FREQ_LCD_1602"])
+         #todo Communication
 
 
     def update (self, data):
         if data.getEvent() == "DECREASE_EVENT":     
             print ("AM - update(): DECREASE_EVENT")
             self.adjustModeParameters("DOWN")
+            self.updateDisplayedModeValue()
         elif data.getEvent() == "INCREASE_EVENT":
             print ("AM - update(): INCREASE_EVENT")
             self.adjustModeParameters("UP")
+            self.updateDisplayedModeValue()
         elif data.getEvent() == "MODE_CHANGE_EVENT":
             print ("AM - update(): MODE_CHANGE_EVENT")
             self.setMode()
+            self.updateDisplayedMode()
         elif data.getEvent() == "WATERING_EVENT":
             print ("AM - update(): WATERING_EVENT")
             self.manualPumpControl()
+            self.visualiseWateringActivity()
         elif data.getEvent() == "MOISTURE_SENSOR_VALUE_EVENT":
             print ("AM - update(): MOISTURE_SENSOR_VALUE_EVENT")
             #todo how to get the actual SensorData through? 
             self.automaticPumpControl()
+            self.updateDisplayedSensorValue()
         else:
             print ("NONE")#todo Implement action
 
@@ -136,4 +142,20 @@ class ActivityManager (Observer, Subject) :
             if self.moseSpikeProtectionCounter > 0:
                 self.moseSpikeProtectionCounter-=1
         utime.sleep(1)
+        
+    #-----------------------------------------------------------------------------------
+    #-------------------------------Visualisation methods-------------------------------
+        
+    def updateDisplayedSensorValue():
+        pass
+    
+    def updateDisplayedModeValue():
+        pass
+    
+    def updateDisplayedMode():
+        pass
+    
+    def visualiseWateringActivity():
+        pass
+        
    

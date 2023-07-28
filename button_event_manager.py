@@ -1,6 +1,6 @@
-from observer import Subject
-from observer import Observer
-from button import Button
+from Observer import Subject
+from Observer import Observer
+from Button import Button
 
 '''
 General 
