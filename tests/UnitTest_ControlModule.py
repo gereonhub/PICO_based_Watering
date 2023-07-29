@@ -1,4 +1,4 @@
-from controlModule import control_module
+from control_module import control_module
 
 if __name__ == '__main__':   # Program entrance
     controlModule = control_module()

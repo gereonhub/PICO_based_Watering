@@ -29,15 +29,15 @@ class visualisation (activity):
         if sensor.getName() == "MOISTURESENSOR":
             self.data = sensor.value # The latest piece of data the sensor has measured.
             #print("Moisty")
-            self.update_LCD()
+            self.update_lcd()
         elif sensor.getName() == "POTENTIOMETER":
             self.threshold = sensor.threshold # The threshold value set by
             #print("Ponti")
-            self.update_LCD()
+            self.update_lcd()
         else:
             print ("ERROR - no value has been transmitted") 
 
-    def update_LCD(self):
+    def update_lcd(self):
         # Display-Zeilen ausgeben
         self.lcd.clear()        
         self.lcd.putstr("Sensor: "+ str(self.data) + "\n")

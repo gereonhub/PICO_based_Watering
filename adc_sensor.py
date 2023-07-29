@@ -4,7 +4,7 @@ from sensor import sensor
 from observer import subject
 
 
-class adc_sensor (Sensor, Subject):
+class adc_sensor (sensor, subject):
  
     VALID_ADC_GPIO_PINS = [26,27,28] #todo this should be part of config file
  

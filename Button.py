@@ -46,5 +46,3 @@ class button (subject):
     
     def get_button_type (self):
         return self.TYPE
-
-        
