@@ -1,4 +1,5 @@
 from activity import activity
+
 from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
@@ -9,21 +10,30 @@ Currently only used to write sensor data in a file.
 
 Implements Activity -> Is an Observer.A
 '''
-class visualisation (activity):
+class LCD1602Visualisation ():
     
     datapoints = []
     data = "-boot-"
     i2c = ()
     lcd = ()
+    
+    # Configuration values for 1620 LCD
+    i2c_address = 0x27
+    lcd_num_lines = 2
+    lcd_num_columns = 16
+
     threshold = 0
     
-    def __init__ (self):
-        # Initialisierung I2C
-        self.i2c= I2C(0, sda=Pin(20), scl=Pin(21), freq=100000)
-        # Initialisierung LCD über I2C
-        self.lcd = I2cLcd(self.i2c, 0x27, 2, 16)
-        #self.lcd.clear()        
-        #self.lcd.putstr("Initializing...")
+    def __init__ (self,sdaPin, sclPin, frequency):
+        
+        #DEBUG
+        pass
+        #DEBUG
+        
+        # Initialization I2C at given I2C port
+        ### self.i2c= I2C(0, sda=Pin(sdaPin), scl=Pin(sclPin), freq=frequency)
+        # Initialization LCD via I2C
+        ### self.lcd = I2cLcd(self.i2c, i2c_address, lcd_num_lines, lcd_num_columns)
     
     def update(self, sensor):
         if sensor.getName() == "MOISTURESENSOR":
@@ -48,5 +58,3 @@ class visualisation (activity):
     def destroy_LCD(self):
         self.lcd.display_off()
         sleep_ms(3000)
-  
-    

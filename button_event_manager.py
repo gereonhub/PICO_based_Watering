@@ -1,7 +1,6 @@
 from observer import subject
 from observer import observer
 from button import button
-
 '''
 General 
 - Creates all SW Interfaces for HW buttons that can interact with the system

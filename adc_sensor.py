@@ -10,8 +10,8 @@ class adc_sensor (sensor, subject):
  
     value = -1
     
-    # First sensor values need to be ignored due to latency of the sensor
     '''
+    First sensor values need to be ignored due to latency of the sensor
     Needs to be adjustable by button with a respective mode.
     #todo re-init of button or value manipulation should then be possible by buttonManager
     '''

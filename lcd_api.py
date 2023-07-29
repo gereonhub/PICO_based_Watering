@@ -2,7 +2,7 @@
 
 import time
 
-class LcdApi:
+class lcd_api:
     """Implements the API for talking with HD44780 compatible character LCDs.
     This class only knows what commands to send to the LCD, and not how to get
     them to the LCD.

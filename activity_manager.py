@@ -2,6 +2,7 @@ import utime
 
 from observer import observer, subject
 from pump_activity import pump_activity
+from visualisation import LCD1602Visualisation
 
 '''
 Responsible to instanciate and control the Activities
@@ -29,7 +30,8 @@ class activity_manager (observer, subject) :
         # Pump
         self.pump_activity_object = pump_activity(self.config_values["PIN_PUMP_ACTIVITY"])
         self.pump_activity_object.initialize_pin_object()
-        #todo LCD
+        # LCD 1602
+        self.lcd1602visualisation = LCD1602Visualisation(self.configValues["PIN_LCD_I2C_SDA"],self.configValues["PIN_LCD_I2C_SCL"], self.configValues["FREQ_LCD_1602"])
         
         #todo Communication
 
@@ -38,19 +40,24 @@ class activity_manager (observer, subject) :
         if data.getEvent() == "DECREASE_EVENT":     
             print ("AM - update(): DECREASE_EVENT")
             self.adjustModeParameters("DOWN")
+            self.updateDisplayedModeValue()
         elif data.getEvent() == "INCREASE_EVENT":
             print ("AM - update(): INCREASE_EVENT")
             self.adjustModeParameters("UP")
+            self.updateDisplayedModeValue()
         elif data.getEvent() == "MODE_CHANGE_EVENT":
             print ("AM - update(): MODE_CHANGE_EVENT")
             self.set_mode()
+            self.updateDisplayedMode()
         elif data.getEvent() == "WATERING_EVENT":
             print ("AM - update(): WATERING_EVENT")
             self.manualPumpControl()
+            self.visualiseWateringActivity()
         elif data.getEvent() == "MOISTURE_SENSOR_VALUE_EVENT":
             print ("AM - update(): MOISTURE_SENSOR_VALUE_EVENT")
             #todo how to get the actual SensorData through? 
             self.automaticPumpControl()
+            self.updateDisplayedSensorValue()
         else:
             print ("NONE")#todo Implement action
 
@@ -136,4 +143,20 @@ class activity_manager (observer, subject) :
             if self.mose_spike_protection_counter > 0:
                 self.mose_spike_protection_counter-=1
         utime.sleep(1)
+        
+    #-----------------------------------------------------------------------------------
+    #-------------------------------Visualisation methods-------------------------------
+        
+    def updateDisplayedSensorValue():
+        pass
+    
+    def updateDisplayedModeValue():
+        pass
+    
+    def updateDisplayedMode():
+        pass
+    
+    def visualiseWateringActivity():
+        pass
+        
    
