@@ -1,6 +1,6 @@
 from Observer import Observer, Subject
 
-from adc_sensor import adc_sensor
+from adc_sensor import AdcSensor
 
 class SensorDataManager (Observer, Subject):
 
@@ -13,7 +13,7 @@ class SensorDataManager (Observer, Subject):
     
     def setUpSensors(self):
         #todo type and PIN need to be checked here to make sure config values are valid
-        self.moistureSensor = adc_sensor(self.configValues["PIN_ADC_MOISTURE_SENSOR"], "MOISTURE_SENSOR")
+        self.moistureSensor = AdcSensor(self.configValues["PIN_ADC_MOISTURE_SENSOR"], "MOISTURE_SENSOR")
         self.moistureSensor.attach(self)
     
     def update(self, sensor):

@@ -11,5 +11,5 @@ class ModeType ():
     def __init__ (self):
         pass
     
-    def get_mode_types (cls):
+    def getModeTypes (cls):
         return cls.modeTypes

@@ -1,18 +1,18 @@
-from observer import subject
+from Observer import Subject
 
-class sensor (subject): #todo sensor-Klasse abstrahieren
+class Sensor (Subject): #todo sensor-Klasse abstrahieren
  
-    def __init__(self, sensor_type):
-        self.TYPE = sensor_type            
+    def __init__(self, sensorType):
+        self.TYPE = sensorType            
    
     #Override
-    def init_sensor_communication (self):
+    def initSensorCommunication (self):
         pass
     
     #Override
-    def read_values (self):
+    def readValues (self):
         #todo implmenent
         pass
     
-    def get_sensor_type (self):
+    def getSensorType (self):
         return self.TYPE

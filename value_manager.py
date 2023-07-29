@@ -1,7 +1,7 @@
 '''
 Instanciated by values of existing configuration file.
 '''
-class value_manager :
+class ValueManager :
     
     values = {}
     minMaxValues = {}

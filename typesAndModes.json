@@ -14,12 +14,12 @@
             "SETMODE_BUTTON",
             "WATERING_BUTTON",
             "NONE"
-        ],
+        ]
     "SENSOR_TYPE":
         [
             "MOISTURE_SENSOR",
             "TEMPERATURE_SENSOR"
-        ],
+        ]
     "EVENT_TYPE":
         [
             "DECREASE_EVENT",

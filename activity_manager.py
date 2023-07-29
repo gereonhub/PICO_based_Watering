@@ -1,39 +1,38 @@
 import utime
 
-from observer import observer, subject
-from pump_activity import pump_activity
-from visualisation import LCD1602Visualisation
+from Observer import Observer, Subject
+from pump_activity import PumpActivity
+from Visualisation import LCD1602Visualisation
 
 '''
 Responsible to instanciate and control the Activities
 '''
-class activity_manager (observer, subject) :
+class ActivityManager (Observer, Subject) :
     
-    last_watering_activity = 0
+    lastWateringActivity = 0
     
     #MoistureSensor -> mose
-    mose_data = 5 # todo 5 only for debug reason. should be 0
-    mose_spike_protection_counter = 0 
+    moseData = 5 # todo 5 only for debug reason. should be 0
+    moseSpikeProtectionCounter = 0 
     
 
     '''
     ConfigValues is the reference to the valueManager object #todo should be a singleton
     '''    
-    def __init__(self, value_manager_object):
-        self.config_values = value_manager_object.values
-        self.value_manager = value_manager_object
-        observer.__init__(self)
-        subject.__init__(self)
+    def __init__(self, valueManagerObject):
+        self.configValues = valueManagerObject.values
+        self.valueManager = valueManagerObject
+        Observer.__init__(self)
+        Subject.__init__(self)
 
 
-    def setup_activities(self):
+    def setupActivities(self):
         # Pump
-        self.pump_activity_object = pump_activity(self.config_values["PIN_PUMP_ACTIVITY"])
-        self.pump_activity_object.initialize_pin_object()
+        self.pumpActivityObject = PumpActivity(self.configValues["PIN_PUMP_ACTIVITY"])
+        self.pumpActivityObject.initializePinObject()
         # LCD 1602
         self.lcd1602visualisation = LCD1602Visualisation(self.configValues["PIN_LCD_I2C_SDA"],self.configValues["PIN_LCD_I2C_SCL"], self.configValues["FREQ_LCD_1602"])
-        
-        #todo Communication
+         #todo Communication
 
 
     def update (self, data):
@@ -47,7 +46,7 @@ class activity_manager (observer, subject) :
             self.updateDisplayedModeValue()
         elif data.getEvent() == "MODE_CHANGE_EVENT":
             print ("AM - update(): MODE_CHANGE_EVENT")
-            self.set_mode()
+            self.setMode()
             self.updateDisplayedMode()
         elif data.getEvent() == "WATERING_EVENT":
             print ("AM - update(): WATERING_EVENT")
@@ -64,32 +63,32 @@ class activity_manager (observer, subject) :
 
     #-----------------------------------------------------------------------------------
     #-------------------------------Set Mode methods-----------------------------------
-    def adjust_mode_parameters (self, up_down_flag):
-        print("AM - adjustModeParameters(): Current Mode: "+self.config_values["MODE"])
-        print("AM - adjustModeParameters(): Current Mode Value: "+str(self.config_values[self.config_values["MODE"]]))
+    def adjustModeParameters (self, upDownFlag):
+        print("AM - adjustModeParameters(): Current Mode: "+self.configValues["MODE"])
+        print("AM - adjustModeParameters(): Current Mode Value: "+str(self.configValues[self.configValues["MODE"]]))
         #1. get current value of MODE/Category
         #2. increase/decrease value (usually +/-1, except for WATERING_THRESHOLD)
         #3. try to set value in ValueManager
-        temp_mode_value = self.config_values[self.config_values["MODE"]]
-        if self.config_values["MODE"] == "WATERING_THRESHOLD":
-            if up_down_flag == "UP":
-                temp_mode_value += self.config_values["WATERING_THRESHOLD_UP_DOWN_VALUE"]
-            if up_down_flag == "DOWN":
-                temp_mode_value -= self.config_values["WATERING_THRESHOLD_UP_DOWN_VALUE"]
+        tempModeValue = self.configValues[self.configValues["MODE"]]
+        if self.configValues["MODE"] == "WATERING_THRESHOLD":
+            if upDownFlag == "UP":
+                tempModeValue += self.configValues["WATERING_THRESHOLD_UP_DOWN_VALUE"]
+            if upDownFlag == "DOWN":
+                tempModeValue -= self.configValues["WATERING_THRESHOLD_UP_DOWN_VALUE"]
         else:
-            if up_down_flag == "UP":
-                temp_mode_value +=1
-            if up_down_flag == "DOWN":
-                temp_mode_value -=1
+            if upDownFlag == "UP":
+                tempModeValue +=1
+            if upDownFlag == "DOWN":
+                tempModeValue -=1
                 
-        if self.value_manager.set_value(self.config_values["MODE"], temp_mode_value):
+        if self.valueManager.setValue(self.configValues["MODE"], tempModeValue):
             #todo implement LCD output
             print("Value has been changed")
-        print("AM - adjustModeParameters(): NEW Mode Value: "+ str(self.config_values[self.config_values["MODE"]]))
+        print("AM - adjustModeParameters(): NEW Mode Value: "+ str(self.configValues[self.configValues["MODE"]]))
         
-    def set_mode (self):
-        print("AM - setMode(): Current Mode: " + self.config_values["MODE"])
-        if self.value_manager.toggleMode():
+    def setMode (self):
+        print("AM - setMode(): Current Mode: "+self.configValues["MODE"])
+        if self.valueManager.toggleMode():
             print("Mode has been changed")
         else:
             print("ERROR Value has NOT been changed")
@@ -98,13 +97,13 @@ class activity_manager (observer, subject) :
     #-----------------------------------------------------------------------------------
     #-------------------------------Pump Control methods--------------------------------
     
-    def manual_pump_control(self):
-        if self.pump_activity_object.get_current_value():
+    def manualPumpControl(self):
+        if self.pumpActivityObject.getCurrentValue():
             return
         else:
-            self.pump_activity_object.activate_pump()
-            utime.sleep(self.config_values["WATERING_TIME"])
-            self.pump_activity_object.stop_pump()
+            self.pumpActivityObject.activatePump()
+            utime.sleep(self.configValues["WATERING_TIME"])
+            self.pumpActivityObject.stopPump()
     
     def automaticPumpControl (self):
         '''
@@ -112,9 +111,9 @@ class activity_manager (observer, subject) :
         no automatic watering is possible. pumpActivityObject.getWaitState will
         be set to false as soon as defined waiting time period has been exceeded.
         '''
-        if self.pump_activity_object.get_wait_state():
-            wait_state_time_difference = utime.time() - self.last_watering_activity            
-            if wait_state_time_difference <= self.config_values["WATERING_WAIT_TIME"]:
+        if self.pumpActivityObject.getWaitState():
+            waitStateTimeDifference = utime.time() - self.lastWateringActivity            
+            if waitStateTimeDifference <= self.configValues["WATERING_WAIT_TIME"]:
                 print('DEBUG - "Wait" is still active') #todo delete - debugging
                 return False
             self.wait = False
@@ -125,38 +124,38 @@ class activity_manager (observer, subject) :
         start watering for the defined amount of time. After the avtivity wait is set to true
         to start the wait phase
         '''
-        print("AM - automaticPumpControl(): Sensor data versus threshold: "+str(self.mose_data) +".>."+str(self.config_values["WATERING_THRESHOLD"])) #todo delete debugging
-        if self.mose_data > self.config_values["WATERING_THRESHOLD"]:
-            print(str(self.mose_spike_protection_counter) + ".<." + str(self.config_values["MOISTURE_SENSOR_SPIKE_PROTECTION"])) #todo delete debugging
-            if self.mose_spike_protection_counter < self.config_values["MOISTURE_SENSOR_SPIKE_PROTECTION"]:
-                self.mose_spike_protection_counter += 1
+        print("AM - automaticPumpControl(): Sensor data versus threshold: "+str(self.moseData) +".>."+str(self.configValues["WATERING_THRESHOLD"])) #todo delete debugging
+        if self.moseData > self.configValues["WATERING_THRESHOLD"]:
+            print(str(self.moseSpikeProtectionCounter) + ".<." + str(self.configValues["MOISTURE_SENSOR_SPIKE_PROTECTION"])) #todo delete debugging
+            if self.moseSpikeProtectionCounter < self.configValues["MOISTURE_SENSOR_SPIKE_PROTECTION"]:
+                self.moseSpikeProtectionCounter+=1
                 return False
             # else überflüssig - Du hast ein return drin, im if-Fall
-            print('DEBUG - Threshold exceeded. Start watering...') #todo delete - debugging
-            self.pump_activity_object.activate_pump()
-            utime.sleep(self.config_values["WATERING_TIME"])
-            self.pump_activity_object.stop_pump()           
-            self.pump_activity_object.set_wait-state(True)
-            self.last_watering_activity = utime.time()
-            self.mose_spike_protection_counter = 0
+            print('DEBUG - Threshold exceeded. Start watering...')#todo delete - debugging
+            self.pumpActivityObject.activatePump()
+            utime.sleep(self.configValues["WATERING_TIME"])
+            self.pumpActivityObject.stopPump()           
+            self.pumpActivityObject.setWaitState(True)
+            self.lastWateringActivity = utime.time()
+            self.moseSpikeProtectionCounter = 0
         else:
-            if self.mose_spike_protection_counter > 0:
-                self.mose_spike_protection_counter-=1
+            if self.moseSpikeProtectionCounter > 0:
+                self.moseSpikeProtectionCounter-=1
         utime.sleep(1)
         
     #-----------------------------------------------------------------------------------
     #-------------------------------Visualisation methods-------------------------------
         
-    def updateDisplayedSensorValue():
-        pass
+    def updateDisplayedSensorValue(self):
+        self.lcd1602visualisation.debugDisplay("Thresh: " + str(self.valueManager.values[self.configValues["MODE"]]), "Sensor: "+ str(33333))
     
-    def updateDisplayedModeValue():
-        pass
+    def updateDisplayedModeValue(self):
+        self.lcd1602visualisation.debugDisplay(self.configValues["MODE"], str(self.valueManager.values[self.configValues["MODE"]]))
     
-    def updateDisplayedMode():
-        pass
+    def updateDisplayedMode(self):
+        self.lcd1602visualisation.debugDisplay("Mode:",self.configValues["MODE"])
     
-    def visualiseWateringActivity():
-        pass
+    def visualiseWateringActivity(self):
+        self.lcd1602visualisation.debugDisplay("Watering", "...-'`´'-...")
         
    
