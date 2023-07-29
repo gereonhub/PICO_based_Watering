@@ -1,6 +1,6 @@
 from observer import subject
 from observer import observer
-from button import Button
+from button import button
 
 '''
 General 
@@ -13,7 +13,7 @@ Todos:
 '''
 class button_event_manager(observer, subject):
     
-    buttonList = []
+    button_list = []
     #Stores the type of button that has triggered the current event to be used by subscribers 
     
     event = "" #IMPORTANT for every Manager class
@@ -21,7 +21,7 @@ class button_event_manager(observer, subject):
     def __init__(self, values):
         observer.__init__(self)
         subject.__init__(self)
-        self.configValues = values
+        self.config_values = values
     
     def check_pin_validity (self): #todo
         pass 
@@ -31,20 +31,20 @@ class button_event_manager(observer, subject):
     '''
     def setup_buttons(self): #todo how to store these values in a config file
         
-        for type, values in self.configValues["BUTTONS"].items(): 
+        for type, values in self.config_values["BUTTONS"].items(): 
             if type == "DOWN_BUTTON":
-                downButton = Button (type, values["PIN"])
-                self.buttonList.append(downButton)             
+                down_button = button (type, values["PIN"])
+                self.button_list.append(down_button)             
             elif type == "UP_BUTTON":
-                upButton = Button (type, values["PIN"])
-                self.buttonList.append(upButton)                
+                up_button = button (type, values["PIN"])
+                self.button_list.append(up_button)                
             elif type == "SETMODE_BUTTON":
-                modeButton = Button (type, values["PIN"])
-                self.buttonList.append(modeButton)                
+                mode_button = button (type, values["PIN"])
+                self.button_list.append(mode_button)                
             elif type == "WATERING_BUTTON":
-                wateringButton = Button (type, values["PIN"])
-                self.buttonList.append(wateringButton)                
-        for x in self.buttonList:
+                watering_button = button (type, values["PIN"])
+                self.button_list.append(watering_button)                
+        for x in self.button_list:
             x.attach(self)
             x.setupButton()
 
@@ -60,15 +60,15 @@ class button_event_manager(observer, subject):
         return self.event
     
     def determine_event_type(self, button):
-        eventType = ""
-        if button.getButtonType() == "DOWN_BUTTON":
-            eventType = "DECREASE_EVENT"
-        elif button.getButtonType() == "UP_BUTTON":
-            eventType = "INCREASE_EVENT"             
-        elif button.getButtonType() == "SETMODE_BUTTON":
-            eventType = "MODE_CHANGE_EVENT"                
-        elif button.getButtonType() == "WATERING_BUTTON":
-            eventType = "WATERING_EVENT"
+        event_type = ""
+        if button.get_button_type() == "DOWN_BUTTON":
+            event_type = "DECREASE_EVENT"
+        elif button.get_button_type() == "UP_BUTTON":
+            event_type = "INCREASE_EVENT"             
+        elif button.get_button_type() == "SETMODE_BUTTON":
+            event_type = "MODE_CHANGE_EVENT"                
+        elif button.get_button_type() == "WATERING_BUTTON":
+            event_type = "WATERING_EVENT"
         else:
-            eventType == "ERROR_NO_EVENT_FOUND"
-        return eventType
+            event_type == "ERROR_NO_EVENT_FOUND"
+        return event_type

@@ -19,7 +19,7 @@ if __name__ == '__main__':   # Program entrance
     ioManager = IOManager()
     bev = button_event_manager(ioManager.getConfigObject())
     bev.setup_buttons()
-    for button in bev.buttonList:
+    for button in bev.button_list:
         runButtonTest (button)
 
     

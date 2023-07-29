@@ -92,12 +92,12 @@ class activity_manager (observer, subject) :
     #-------------------------------Pump Control methods--------------------------------
     
     def manual_pump_control(self):
-        if self.pump_activity_object.getCurrentValue():
+        if self.pump_activity_object.get_current_value():
             return
         else:
-            self.pump_activity_object.activatePump()
+            self.pump_activity_object.activate_pump()
             utime.sleep(self.config_values["WATERING_TIME"])
-            self.pump_activity_object.stopPump()
+            self.pump_activity_object.stop_pump()
     
     def automaticPumpControl (self):
         '''
@@ -105,7 +105,7 @@ class activity_manager (observer, subject) :
         no automatic watering is possible. pumpActivityObject.getWaitState will
         be set to false as soon as defined waiting time period has been exceeded.
         '''
-        if self.pump_activity_object.getWaitState():
+        if self.pump_activity_object.get_wait_state():
             wait_state_time_difference = utime.time() - self.last_watering_activity            
             if wait_state_time_difference <= self.config_values["WATERING_WAIT_TIME"]:
                 print('DEBUG - "Wait" is still active') #todo delete - debugging
@@ -126,10 +126,10 @@ class activity_manager (observer, subject) :
                 return False
             # else überflüssig - Du hast ein return drin, im if-Fall
             print('DEBUG - Threshold exceeded. Start watering...') #todo delete - debugging
-            self.pump_activity_object.activatePump()
+            self.pump_activity_object.activate_pump()
             utime.sleep(self.config_values["WATERING_TIME"])
-            self.pump_activity_object.stopPump()           
-            self.pump_activity_object.setWaitState(True)
+            self.pump_activity_object.stop_pump()           
+            self.pump_activity_object.set_wait-state(True)
             self.last_watering_activity = utime.time()
             self.mose_spike_protection_counter = 0
         else:

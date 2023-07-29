@@ -4,7 +4,7 @@ from sensor import sensor
 from observer import subject
 
 
-class AdcSensor (Sensor, Subject):
+class adc_sensor (Sensor, Subject):
  
     VALID_ADC_GPIO_PINS = [26,27,28] #todo this should be part of config file
  
@@ -32,14 +32,14 @@ class AdcSensor (Sensor, Subject):
         subject.__init__(self)
             
     #todo check if exception handling is ok here
-    def initSensorCommunication (self):
+    def init_sensor_communication (self):
         # Initiate the analog digital converter for capacitive soil moist sensor.
         try:
             self.analog_value = machine.ADC(self.ADC_GPIO_PIN)
         except Error as E:
             print (repr(E) + "ADC could not be initialized") #todo create proper exception handling
        
-    def readValues (self):
+    def read_values (self):
         # Read value from sensor
         temp =  self.analog_value.read_u16()
         
