@@ -1,10 +1,10 @@
 import machine
 
-from Sensor import Sensor
-from Observer import Subject
+from sensor import sensor
+from observer import subject
 
 
-class AdcSensor (Sensor, Subject):
+class adc_sensor (sensor, subject):
  
     VALID_ADC_GPIO_PINS = [26,27,28] #todo this should be part of config file
  
@@ -15,12 +15,12 @@ class AdcSensor (Sensor, Subject):
     Needs to be adjustable by button with a respective mode.
     #todo re-init of button or value manipulation should then be possible by buttonManager
     '''
-    initialIgnoreValues = 10
-    initialIgnoreCounter = 1
+    initial_ignore_values = 10
+    initial_ignore_counter = 1
     
-    analogValue = 0    
+    analog_value = 0    
  
-    def __init__(self, pin, sensorType): #todo Name might be useful, too. Two sensors of one type are theoretically possible.
+    def __init__(self, pin, sensor_type): #todo Name might be useful, too. Two sensors of one type are theoretically possible.
         try:
             if pin not in self.VALID_ADC_GPIO_PINS:
                 raise Exception('GPIO pin provided for sensor (' +str(pin)+ ') is invalid!')
@@ -28,20 +28,20 @@ class AdcSensor (Sensor, Subject):
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
-        Sensor.__init__(self, sensorType)
-        Subject.__init__(self)
+        sensor.__init__(self, sensor_type)
+        subject.__init__(self)
             
     #todo check if exception handling is ok here
-    def initSensorCommunication (self):
+    def init_sensor_communication (self):
         # Initiate the analog digital converter for capacitive soil moist sensor.
         try:
-            self.analogValue = machine.ADC(self.ADC_GPIO_PIN)
+            self.analog_value = machine.ADC(self.ADC_GPIO_PIN)
         except Error as E:
             print (repr(E) + "ADC could not be initialized") #todo create proper exception handling
        
-    def readValues (self):
+    def read_values (self):
         # Read value from sensor
-        temp =  self.analogValue.read_u16()
+        temp =  self.analog_value.read_u16()
         
         # Overcome first value problem
         if self.value == -1:
@@ -50,8 +50,8 @@ class AdcSensor (Sensor, Subject):
         #Due to the sensor taking some time to adjust to real values 
         #one needs to ignore the first x values to avoid unnecessary watering
         #todo This value should be configurable by button, too. 
-        if self.initialIgnoreCounter <= self.initialIgnoreValues:
-            self.initialIgnoreCounter+=1
+        if self.initial_ignore_counter <= self.initial_ignore_values:
+            self.initial_ignore_counter+=1
             #print ('DEBUG - InitialIgnoreState: {0}'.format(temp)) 
             self.value = temp
             return
@@ -64,7 +64,7 @@ class AdcSensor (Sensor, Subject):
         # Store last value for comparison in next round
         self.value = temp
     
-    def getSensorPin(self):
+    def get_sensor_pin(self):
         return self.ADC_GPIO_PIN
 
 

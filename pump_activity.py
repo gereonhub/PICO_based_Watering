@@ -1,40 +1,40 @@
 import machine
 import _thread
 
-class PumpActivity ():
+class pump_activity ():
 
-    waitState = False
+    wait_state = False
     
     #Pin objects
-    pumpControlObject = ()
+    pump_control_object = ()
     
     def __init__(self, pin):
         self.pumpControlPin = pin # usually PIN 16 at position 21
         
-    def initializePinObject(self):
+    def initialize_pin_object(self):
         #Instantiate Pin object for AUTOMATIC pump control
-        self.pumpControlObject = machine.Pin(self.pumpControlPin, machine.Pin.OUT)
-        self.pumpControlObject.value(0)
+        self.pump_control_object = machine.Pin(self.pumpControlPin, machine.Pin.OUT)
+        self.pump_control_object.value(0)
 
     # Set pump control pin to 1 - start watering process
-    def activatePump(self):
+    def activate_pump(self):
         lock = _thread.allocate_lock()
         with lock:
-            self.pumpControlObject.value(1)
+            self.pump_control_object.value(1)
             print('DEBUG - Pump is active!')#todo delete - debugging
     
     # Set pump control pin to 0 - stop warterin process
-    def stopPump(self):
+    def stop_pump(self):
         lock = _thread.allocate_lock()
         with lock:
-            self.pumpControlObject.value(0)
+            self.pump_control_object.value(0)
             print('DEBUG - Pump is inactive again!')#todo delete - debugging
     
-    def setWaitState (self, state):
-        self.waitState = state
+    def set_wait_state (self, state):
+        self.wait_state = state
         
-    def getWaitState (self):
-        return self.waitState
+    def get_wait_state (self):
+        return self.wait_state
     
-    def getCurrentValue (self):
-        return self.pumpControlObject.value()
+    def get_current_value (self):
+        return self.pump_control_object.value()

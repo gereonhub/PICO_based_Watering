@@ -4,7 +4,7 @@ Subject: The object that is being observed. Able to inform all its subscribers, 
 Observer: Object that waits for updates from the object it observes...
 
 '''
-class Subject:
+class subject:
 
     value = 0
 
@@ -27,7 +27,7 @@ class Subject:
         self.activities.remove(actitity)
 
 
-class Observer:
+class observer:
     def __init__ (self):
         pass
     

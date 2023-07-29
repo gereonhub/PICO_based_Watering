@@ -1,3 +1,5 @@
+from activity import activity
+
 from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
@@ -33,7 +35,19 @@ class LCD1602Visualisation ():
         # Initialization LCD via I2C
         ### self.lcd = I2cLcd(self.i2c, i2c_address, lcd_num_lines, lcd_num_columns)
     
-    def update_LCD(self):
+    def update(self, sensor):
+        if sensor.getName() == "MOISTURESENSOR":
+            self.data = sensor.value # The latest piece of data the sensor has measured.
+            #print("Moisty")
+            self.update_lcd()
+        elif sensor.getName() == "POTENTIOMETER":
+            self.threshold = sensor.threshold # The threshold value set by
+            #print("Ponti")
+            self.update_lcd()
+        else:
+            print ("ERROR - no value has been transmitted") 
+
+    def update_lcd(self):
         # Display-Zeilen ausgeben
         self.lcd.clear()        
         self.lcd.putstr("Sensor: "+ str(self.data) + "\n")
@@ -44,5 +58,3 @@ class LCD1602Visualisation ():
     def destroy_LCD(self):
         self.lcd.display_off()
         sleep_ms(3000)
-  
-    

@@ -1,4 +1,4 @@
-from lcd_api import LcdApi
+from lcd_api import lcd_api
 from time import sleep_ms
 
 # The PCF8574 has a jumper selectable address: 0x20 - 0x27
@@ -13,7 +13,7 @@ SHIFT_BACKLIGHT = 3
 SHIFT_DATA = 4
 
 
-class I2cLcd(LcdApi):
+class I2cLcd(lcd_api):
     """Implements a HD44780 character LCD connected via PCF8574 on I2C."""
 
     def __init__(self, i2c, i2c_addr, num_lines, num_columns):
@@ -31,7 +31,7 @@ class I2cLcd(LcdApi):
         # Put LCD into 4 bit mode
         self.hal_write_init_nibble(self.LCD_FUNCTION)
         sleep_ms(1)
-        LcdApi.__init__(self, num_lines, num_columns)
+        lcd_api.__init__(self, num_lines, num_columns)
         cmd = self.LCD_FUNCTION
         if num_lines > 1:
             cmd |= self.LCD_FUNCTION_2LINES

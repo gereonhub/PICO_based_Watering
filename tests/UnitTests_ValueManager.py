@@ -2,8 +2,8 @@ from value_manager import ValueManager
 from io_manager import IOManager
 
 if __name__ == '__main__':
-    iom = IOManager()
-    valueManager = ValueManager(iom.getConfigValues(),iom.getMinMaxValues(), iom.getTypesAndModes())
+    iom = io_manager()
+    valueManager = ValueManager(iom.get_config_values(),iom.get_min_max_values(), iom.get_types_and_modes())
     print(valueManager.values["BUTTONS"])
     #valueManager.values["DEBUG"] = "VeraenderterWert"
     #print(valueManager.values["DEBUG"])
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     print(valueManager.values["MOISTURE_SENSOR_SPIKE_PROTECTION"])
     valueManager.setValue("MOISTURE_SENSOR_SPIKE_PROTECTION", 21)
     print(valueManager.values["MOISTURE_SENSOR_SPIKE_PROTECTION"])
-    iom.writeConfiguration(valueManager.values)
+    iom.write_configuration(valueManager.values)
      
     
     
