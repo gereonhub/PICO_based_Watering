@@ -1,5 +1,5 @@
-from observer import Subject
-from observer import Observer
+from observer import subject
+from observer import observer
 from button import Button
 
 '''
@@ -11,7 +11,7 @@ Todos:
 - #todo Sanity check: Collect all GPIO pin information, check for duplicates and provides pin information for global check in tbd module
 - #todo Informs the activities that are meant to be triggered by an event (to reduce traffic it implements an Observer pattern).
 '''
-class ButtonEventManager(Observer, Subject):
+class button_event_manager(observer, subject):
     
     buttonList = []
     #Stores the type of button that has triggered the current event to be used by subscribers 
@@ -19,17 +19,17 @@ class ButtonEventManager(Observer, Subject):
     event = "" #IMPORTANT for every Manager class
     
     def __init__(self, values):
-        Observer.__init__(self)
-        Subject.__init__(self)
+        observer.__init__(self)
+        subject.__init__(self)
         self.configValues = values
     
-    def checkPinValidity (self): #todo
+    def check_pin_validity (self): #todo
         pass 
     
     '''
     Specific buttons are created using the information stored in the configValues (todo) and are being listened to (Observer pattern)
     '''
-    def setupButtons(self): #todo how to store these values in a config file
+    def setup_buttons(self): #todo how to store these values in a config file
         
         for type, values in self.configValues["BUTTONS"].items(): 
             if type == "DOWN_BUTTON":
@@ -53,13 +53,13 @@ class ButtonEventManager(Observer, Subject):
     '''
     def update (self, button):
         print("BEM - update() : BUTTON UPDATE TRIGGERED by " + button.getButtonType())        
-        self.event = self.determineEventType(button)
+        self.event = self.determine_event_type(button)
         self.notify()
         
-    def getEvent (self):
+    def get_event (self):
         return self.event
     
-    def determineEventType(self, button):
+    def determine_event_type(self, button):
         eventType = ""
         if button.getButtonType() == "DOWN_BUTTON":
             eventType = "DECREASE_EVENT"

@@ -3,7 +3,7 @@ from DownButton import DownButton
 from UpButton import UpButton
 from WateringButton import WateringButton
 from ModeButton import ModeButton
-from button_event_manager import ButtonEventManager
+from button_event_manager import button_event_manager
 from buttonType import ButtonType
 from io_manager import IOManager
 
@@ -17,8 +17,8 @@ if __name__ == '__main__':   # Program entrance
     
     print(ButtonType().getButtonTypes())
     ioManager = IOManager()
-    bev = ButtonEventManager(ioManager.getConfigObject())
-    bev.setupButtons()
+    bev = button_event_manager(ioManager.getConfigObject())
+    bev.setup_buttons()
     for button in bev.buttonList:
         runButtonTest (button)
 

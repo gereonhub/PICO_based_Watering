@@ -1,7 +1,7 @@
 import machine
 import _thread
 
-class PumpActivity ():
+class pump_activity ():
 
     waitState = False
     
@@ -11,7 +11,7 @@ class PumpActivity ():
     def __init__(self, pin):
         self.pumpControlPin = pin # usually PIN 16 at position 21
         
-    def initializePinObject(self):
+    def initialize_pin_object(self):
         #Instantiate Pin object for AUTOMATIC pump control
         self.pumpControlObject = machine.Pin(self.pumpControlPin, machine.Pin.OUT)
         self.pumpControlObject.value(0)

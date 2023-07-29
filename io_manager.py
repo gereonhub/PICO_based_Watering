@@ -17,7 +17,7 @@ class IOManager:
         if self.checkFileExists():
             self.readConfiguration()
             self.readMinMaxValues()
-            self.readTypesAndModes()
+            self.read_types_and_modes()
             
     def readConfiguration(self):
         print(self.CONFIG_FILE)
@@ -35,7 +35,7 @@ class IOManager:
         except ValueError:
             print ("ERROR: JSON FILE COULD NOT BE READ")
     
-    def readTypesAndModes(self):
+    def read_types_and_modes(self):
         print(self.TYPES_AND_MODES)
         try:
             with open(self.TYPES_AND_MODES) as inStream:

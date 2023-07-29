@@ -1,4 +1,4 @@
-from Activity import Activity
+from activity import activity
 from time import sleep_ms
 from machine import I2C, Pin
 from machine_i2c_lcd import I2cLcd
@@ -9,7 +9,7 @@ Currently only used to write sensor data in a file.
 
 Implements Activity -> Is an Observer.A
 '''
-class Visualisation (Activity):
+class visualisation (activity):
     
     datapoints = []
     data = "-boot-"
