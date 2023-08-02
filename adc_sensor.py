@@ -20,7 +20,7 @@ class AdcSensor (Sensor, Subject):
     
     analogValue = 0    
  
-    def __init__(self, pin, sensorType): #todo Name might be useful, too. Two sensors of one type are theoretically possible.
+    def __init__(self, pin, sensorType, logger): #todo Name might be useful, too. Two sensors of one type are theoretically possible.
         try:
             if pin not in self.VALID_ADC_GPIO_PINS:
                 raise Exception('GPIO pin provided for sensor (' +str(pin)+ ') is invalid!')
@@ -28,7 +28,7 @@ class AdcSensor (Sensor, Subject):
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
-        Sensor.__init__(self, sensorType)
+        Sensor.__init__(self, sensorType, logger)
         Subject.__init__(self)
             
     #todo check if exception handling is ok here
@@ -37,10 +37,11 @@ class AdcSensor (Sensor, Subject):
         try:
             self.analogValue = machine.ADC(self.ADC_GPIO_PIN)
         except Error as E:
-            print (repr(E) + "ADC could not be initialized") #todo create proper exception handling
+            self.logger.log(repr(E) + "ADC could not be initialized") #todo create proper exception handling
        
     def readValues (self):
         # Read value from sensor
+        self.logger.log(self.analogValue)
         temp =  self.analogValue.read_u16()
         
         # Overcome first value problem
@@ -57,12 +58,12 @@ class AdcSensor (Sensor, Subject):
             return
         
         # Get the difference between current and last measurement
-        diff = self.value - temp
-        print("DEBUG - Difference between current and last value: {0} - {1} = {2})".format(self.value, temp, diff))
-        # Trigger the Observable notify method
-        self.notify()
+        self.logger.log("ADCSensor - readValues() - Difference between current and last value: {0} - {1} = {2})".format(self.value, temp, (self.value - temp)))
         # Store last value for comparison in next round
         self.value = temp
+        # Trigger the Observable notify method
+        self.notify()
+        
     
     def getSensorPin(self):
         return self.ADC_GPIO_PIN

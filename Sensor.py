@@ -2,8 +2,9 @@ from Observer import Subject
 
 class Sensor (Subject): #todo sensor-Klasse abstrahieren
  
-    def __init__(self, sensorType):
-        self.TYPE = sensorType            
+    def __init__(self, sensorType, logger):
+        self.TYPE = sensorType
+        self.logger = logger
    
     #Override
     def initSensorCommunication (self):
@@ -11,7 +12,6 @@ class Sensor (Subject): #todo sensor-Klasse abstrahieren
     
     #Override
     def readValues (self):
-        #todo implmenent
         pass
     
     def getSensorType (self):

@@ -22,10 +22,10 @@ class LCD1602Visualisation ():
 
     threshold = 0
     
-    def __init__ (self,sdaPin, sclPin, frequency):
+    def __init__ (self,sdaPin, sclPin, frequency, logger):
         
         #DEBUG
-        pass
+        self.logger = logger
         #DEBUG
         
         # Initialization I2C at given I2C port
@@ -34,17 +34,21 @@ class LCD1602Visualisation ():
         ### self.lcd = I2cLcd(self.i2c, i2c_address, lcd_num_lines, lcd_num_columns)
     
     def debugDisplay(self, line1, line2):
-        print("DISPLAY_LINE1: "+ line1)
-        print("DISPLAY_LINE2: "+ line2)
+        self.logger.info("LCDVIS - debugDisplay() - DISPLAY_LINE1: "+ line1)
+        self.logger.info("LCDVIS - debugDisplay() - DISPLAY_LINE2: "+ line2)
     
-    def update_LCD(self):
+    def update_LCD(self, line1, line2):
         # Display-Zeilen ausgeben
         self.lcd.clear()        
-        self.lcd.putstr("Sensor: "+ str(self.data) + "\n")
-        self.lcd.putstr("Thresh: "+ str(self.threshold))
-        #print("Sleep update")
-        sleep_ms(1000)
-     
+        self.lcd.putstr(line1+ "\n")
+        self.lcd.putstr(line2)
+        #sleep_ms(1000)
+        
+    def update_sensor_value(self, sensorValue):
+        self.lcd.moveTo(8,1)
+        for x in str(sensorValue):
+            self.lcd.putChar(x)        
+    
     def destroy_LCD(self):
         self.lcd.display_off()
         sleep_ms(3000)

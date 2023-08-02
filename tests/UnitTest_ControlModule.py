@@ -1,9 +1,8 @@
-from control_module import control_module
+from controlModule import ControlModule
 
 if __name__ == '__main__':   # Program entrance
-    controlModule = control_module()
+    controlModule = ControlModule()
     controlModule.setupManagers()
     controlModule.establishManagerConnections()
     controlModule.sensorDM.update(controlModule.sensorDM.moistureSensor)
-    while (True):
-        pass
+    controlModule.startMainThread()

@@ -1,6 +1,7 @@
 from Observer import Subject
 from Observer import Observer
 from Button import Button
+from logger import Logger
 
 '''
 General 
@@ -18,11 +19,11 @@ class ButtonEventManager(Observer, Subject):
     
     event = "" #IMPORTANT for every Manager class
     
-    def __init__(self, values):
+    def __init__(self, values, logger):
         Observer.__init__(self)
         Subject.__init__(self)
         self.configValues = values
-    
+        self.logger = logger
     def checkPinValidity (self): #todo
         pass 
     
@@ -33,16 +34,16 @@ class ButtonEventManager(Observer, Subject):
         
         for type, values in self.configValues["BUTTONS"].items(): 
             if type == "DOWN_BUTTON":
-                downButton = Button (type, values["PIN"])
+                downButton = Button (type, values["PIN"], self.logger)
                 self.buttonList.append(downButton)             
             elif type == "UP_BUTTON":
-                upButton = Button (type, values["PIN"])
+                upButton = Button (type, values["PIN"], self.logger)
                 self.buttonList.append(upButton)                
             elif type == "SETMODE_BUTTON":
-                modeButton = Button (type, values["PIN"])
+                modeButton = Button (type, values["PIN"], self.logger)
                 self.buttonList.append(modeButton)                
             elif type == "WATERING_BUTTON":
-                wateringButton = Button (type, values["PIN"])
+                wateringButton = Button (type, values["PIN"], self.logger)
                 self.buttonList.append(wateringButton)                
         for x in self.buttonList:
             x.attach(self)
@@ -52,7 +53,7 @@ class ButtonEventManager(Observer, Subject):
     Buttons trigger notify() whenever pressed physically. 
     '''
     def update (self, button):
-        print("BEM - update() : BUTTON UPDATE TRIGGERED by " + button.getButtonType())        
+        self.logger.log("BEM - update() : BUTTON UPDATE TRIGGERED by " + button.getButtonType())        
         self.event = self.determineEventType(button)
         self.notify()
         

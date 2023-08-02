@@ -1,10 +1,10 @@
-from pumpActivity import PumpActivity
-from activityManager import ActivityManager
-from io_manager import io_manager
+from pump_activity import PumpActivity
+from activity_manager import ActivityManager
+from io_manager import IOManager
 
 def runActivityManagerTest ():
-    ioManager = io_manager()
-    am = ActivityManager (ioManager.get_config_values())
+    ioManager = IOManager()
+    am = ActivityManager (ioManager.getConfigValues())
     print ("am is initiated")
     am.setupActivities()
     print("activites updates")

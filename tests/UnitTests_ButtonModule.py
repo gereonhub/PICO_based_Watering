@@ -1,6 +1,4 @@
-from button import Button
-from button_event_manager import button_event_manager
-from io_manager import io_manager
+from Button import Button
 from button_event_manager import ButtonEventManager
 from io_manager import IOManager
 
@@ -12,10 +10,11 @@ def runButtonTest(testButton):
 
 if __name__ == '__main__':   # Program entrance
     
-    ioManager = io_manager()
-    bev = button_event_manager(ioManager.getConfigObject())
-    bev.setup_buttons()
-    for button in bev.button_list:
+    print(ButtonType().getButtonTypes())
+    ioManager = IOManager()
+    bev = ButtonEventManager(ioManager.getConfigObject())
+    bev.setupButtons()
+    for button in bev.buttonList:
         runButtonTest (button)
 
     

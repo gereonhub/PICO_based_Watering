@@ -13,7 +13,7 @@ class Button (Subject):
     Instanciate the class by providing its name and the GPIO pin. PIN availability needs to be checked in caller class.
     name has to be a membe of Buttontype dictionary #todo find alternative for proper enum class here.
     '''
-    def __init__(self, btnType, pin):
+    def __init__(self, btnType, pin, logger):
         try:
             if pin not in self.VALID_GPIO_PINS:
                 raise Exception('GPIO pin provided (' +str(pin)+ ') is invalid!')
@@ -22,6 +22,7 @@ class Button (Subject):
             #if btnType not in ButtonType().getButtonTypes().values():
             #    raise Exception('Name provided (' +str(btnType)+ ') is not a valid ButtonType name!')
             self.TYPE = btnType
+            self.logger = logger
         except ValueError as ve:
             print('ERROR: ' + repr(ve) + " - Program terminated.")
             sys.exit()
@@ -31,7 +32,7 @@ class Button (Subject):
     Calls notify() which is defined in parent class Subject from Observer module
     '''
     def buttonHandler (self, pin):
-        print("Button class:" + str(self.getButtonType()) + " has been pressed and is notifying its subscribers")
+        self.logger.log("Button class:" + str(self.getButtonType()) + " has been pressed and is notifying its subscribers")
         sleep_ms(100)
         self.notify()
     
