@@ -1,30 +1,36 @@
-from value_manager import value_manager
-from activity_manager import activity_manager
-from button_event_manager import button_event_manager
-from io_manager import io_manager
+from value_manager import ValueManager
+from activity_manager import ActivityManager
+from button_event_manager import ButtonEventManager
+from io_manager import IOManager
 from sensor_data_manager import SensorDataManager
+from logger import Logger
 
-class control_module:
+class ControlModule:
     
     def __init__(self):
        pass 
     
-    def setup_managers(self):
+    def setupManagers(self):
+        # Init logger class - True -> logger active, False -> logger inactive
+        self.logger = Logger(False)
         # Open filestream and deserialize configValue file (JSON)
-        self.ioManager = io_manager()
+        self.ioManager = IOManager()
         # Instanciate central file manager using config values to create central value object
-        self.valueManager = ValueManager(self.ioManager.get_config_values(), self.ioManager.get_min_max_values(), self.ioManager.get_types_and_modes())
+        self.valueManager = ValueManager(self.ioManager.getConfigValues(), self.ioManager.getMinMaxValues(), self.ioManager.getTypesAndModes(),self.logger)
         #Instanciate SensorManager providing central value object.
-        self.sensorDM = SensorDataManager(self.ioManager.get_config_values())
+        self.sensorDM = SensorDataManager(self.ioManager.getConfigValues(), self.logger)
         self.sensorDM.setUpSensors()
         #Instanciate ButtonEventManager
-        self.buttonEM = button_event_manager(self.ioManager.get_config_values())
-        self.buttonEM.setup_buttons()       
+        self.buttonEM = ButtonEventManager(self.ioManager.getConfigValues(), self.logger)
+        self.buttonEM.setupButtons()       
         #Instanciate Activity Manager providing central value object
-        self.activityManager = ActivityManager(self.valueManager)
+        self.activityManager = ActivityManager(self.valueManager, self.logger)
         self.activityManager.setupActivities()
 
     
-    def establish_manager_connections(self):
+    def establishManagerConnections(self):
         self.buttonEM.attach(self.activityManager)
         self.sensorDM.attach(self.activityManager)
+        
+    def startMainThread(self):
+        self.sensorDM.start()
